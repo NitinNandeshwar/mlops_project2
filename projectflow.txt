@@ -13,9 +13,10 @@
 8. Go to: https://dagshub.com/dashboard
 9. Create > New Repo > Connect a repo > (Github) Connect > Select your repo > Connect
 10. Copy experiment tracking url and code snippet. (Also try: Go To MLFlow UI)
-    https://dagshub.com/NitinNandeshwar/learnyard-capstone-project1.mlflow
+    https://dagshub.com/NitinNandeshwar/mlops_project2.mlflow
 
-    dagshub.init(repo_owner='NitinNandeshwar', repo_name='learnyard-capstone-project1', mlflow=True)
+    import dagshub
+    dagshub.init(repo_owner='NitinNandeshwar', repo_name='mlops_project2', mlflow=True)
 
 11. pip install dagshub & mlflow
 
