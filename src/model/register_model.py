@@ -30,8 +30,10 @@ warnings.filterwarnings("ignore")
 
 # -------------------------------------------------------------------------------------
 # Below code is for local use
+
 mlflow.set_tracking_uri("https://dagshub.com/NitinNandeshwar/mlops_project2.mlflow")
 dagshub.init(repo_owner='NitinNandeshwar', repo_name='mlops_project2', mlflow=True)
+
 # -------------------------------------------------------------------------------------
 
 def load_model_info(file_path: str) -> dict:
@@ -67,7 +69,7 @@ def register_model_and_transformer(model_name: str, model_info: dict, transforme
         logging.debug(f'Model {model_name} version {model_version.version} registered and transitioned to Staging.')
 
         # Log the DataTransformer as an artifact
-        mlflow.log_artifact(transformer_path, artifact_path="preprocessing") # 
+        # mlflow.log_artifact(transformer_path, artifact_path="preprocessing") # 
 
         # Register DataTransformer in MLflow Model Registry
         transformer_uri = f"runs:/{model_info['run_id']}/preprocessing/{os.path.basename(transformer_path)}"

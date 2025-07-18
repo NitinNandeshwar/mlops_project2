@@ -91,3 +91,7 @@ data/
 !src/data/
 catboost_info/
 models/
+
+# MLflow tracking and model registry
+reports/
+local_s3/

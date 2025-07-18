@@ -117,15 +117,15 @@ def main():
     with mlflow.start_run() as run:  # Start an MLflow run
         try:
             clf = load_model('./models/model.pkl')
-            test_data = load_data('./data/processed/test_final.csv')
+            # test_data = load_data('./data/processed/test_final.csv')
 
-            # test_data = load_data('./data/interim/test_preprocessed.csv')
-            # data_tranformer = load_model('models/data_transformer.pkl')
+            test_data = load_data('./data/interim/test_preprocessed.csv')
+            data_tranformer = load_model('models/data_transformer.pkl')
 
-            # X_test = test_data.drop(columns=['HeartDisease'])
+            X_test = test_data.drop(columns=['HeartDisease'])
 
-            # # Transform the test data using the preprocessor
-            # X_test = data_tranformer.transform(X_test)
+            # Transform the test data using the preprocessor
+            X_test = data_tranformer.transform(X_test)
             
             X_test = test_data.iloc[:, :-1].values
             y_test = test_data.iloc[:, -1].values
