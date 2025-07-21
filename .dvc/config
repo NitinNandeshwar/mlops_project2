@@ -1,6 +1,6 @@
 [core]
-    remote = mylocal
+    remote = myremote
 ['remote "mylocal"']
     url = ../local_s3
-['remote "my_local"']
-    url = ../local_s3
+['remote "myremote"']
+    url = s3://mlops-project2
