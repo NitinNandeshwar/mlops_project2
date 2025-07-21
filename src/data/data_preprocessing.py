@@ -3,7 +3,7 @@ import pandas as pd
 import os
 import sys
 import logging
-from imblearn.combine import SMOTEENN
+# from imblearn.combine import SMOTEENN
 from sklearn.model_selection import train_test_split
 from sklearn.utils import resample
 from src.logger import logging
