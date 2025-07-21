@@ -6,6 +6,7 @@ from sklearn.model_selection import train_test_split
 import yaml
 import sys
 from src.logger import logging
+from src.connections import s3_connection
 
 from dotenv import load_dotenv
 
@@ -55,8 +56,15 @@ def save_data(df: pd.DataFrame, data_path: str) -> None:
 
 def main():
     try:
+        bucket_name = os.getenv("AWS_S3_BUCKET")
+        aws_access_key = os.getenv("AWS_ACCESS_KEY_ID")
+        aws_secret_key = os.getenv("AWS_SECRET_ACCESS_KEY")
+        FILE_KEY = "data.csv"  # Path inside S3 bucket
         
-        df = load_data(data_url=os.getenv("DATA_URL"))
+        s3 = s3_connection.s3_operations(bucket_name, aws_access_key, aws_secret_key)
+        df = s3.fetch_file_from_s3(FILE_KEY)
+
+        # df = load_data(data_url=os.getenv("DATA_URL"))
 
         if df is None:
             logging.error("Data fetching failed, received None. Exiting.")
