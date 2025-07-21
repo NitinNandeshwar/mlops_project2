@@ -62,7 +62,7 @@ def main():
         FILE_KEY = "data.csv"  # Path inside S3 bucket
         
         s3 = s3_connection.s3_operations(bucket_name, aws_access_key, aws_secret_key)
-        df = s3.fetch_file_from_s3(FILE_KEY)
+        df = s3.fetch_file(FILE_KEY)
 
         # df = load_data(data_url=os.getenv("DATA_URL"))
 
