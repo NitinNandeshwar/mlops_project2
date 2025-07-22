@@ -19,28 +19,29 @@ logger = logging.getLogger(__name__)
 # Below code block is for production use
 # -------------------------------------------------------------------------------------
 # Set up DagsHub credentials for MLflow tracking
-# dagshub_token = os.getenv("CAPSTONE_TEST")
-# if not dagshub_token:
-#     raise EnvironmentError("CAPSTONE_TEST environment variable is not set")
+dagshub_token = os.getenv("CAPSTONE_TEST")
+if not dagshub_token:
+    raise EnvironmentError("CAPSTONE_TEST environment variable is not set")
 
-# os.environ["MLFLOW_TRACKING_USERNAME"] = dagshub_token
-# os.environ["MLFLOW_TRACKING_PASSWORD"] = dagshub_token
+os.environ["MLFLOW_TRACKING_USERNAME"] = dagshub_token
+os.environ["MLFLOW_TRACKING_PASSWORD"] = dagshub_token
 
-# dagshub_url = "https://dagshub.com"
-# repo_owner = "NitinNandeshwar"
-# repo_name = "learnyard-capstone-project1"
-# # Set up MLflow tracking URI
-# mlflow.set_tracking_uri(f'{dagshub_url}/{repo_owner}/{repo_name}.mlflow')
+dagshub_url = "https://dagshub.com"
+repo_owner = os.getenv("DAGSHUB_REPO_OWNER")
+repo_name = os.getenv("DAGSHUB_REPO_NAME")
+
+# Set up MLflow tracking URI
+mlflow.set_tracking_uri(f'{dagshub_url}/{repo_owner}/{repo_name}.mlflow')
 # -------------------------------------------------------------------------------------
 
 # ----------------------------------------------
 # Below code block is for loacl use
 # ----------------------------------------------
-MLFLOW_TRACKING_URI = "https://dagshub.com/NitinNandeshwar/mlops_project2.mlflow"
+# MLFLOW_TRACKING_URI = "https://dagshub.com/NitinNandeshwar/mlops_project2.mlflow"
 
-# Set up MLflow tracking 
-mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
-dagshub.init(repo_owner="NitinNandeshwar", repo_name="mlops_project2", mlflow=True)
+# # Set up MLflow tracking 
+# mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
+# dagshub.init(repo_owner="NitinNandeshwar", repo_name="mlops_project2", mlflow=True)
 
 
 # ----------------------------------------------
