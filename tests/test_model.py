@@ -42,6 +42,22 @@ class TestCreditFraudModel(unittest.TestCase):
         latest_version = client.get_latest_versions(model_name, stages=[stage])
         return latest_version[0].version if latest_version else None
     
+    @staticmethod
+    def calculate_expected_columns(transformer, sample_input):
+        """Calculate the expected number of columns after transformation."""
+        # Assuming that transformer has both OneHotEncoder and StandardScaler
+        # Example: one-hot encoding increases the number of columns based on unique categories
+        num_columns = 0
+        
+        # For the OneHotEncoder part, we need to count the number of unique categories in the input
+        for transformer,slice_obj in transformer.output_indices_.items():  # iterating through transformers applied on columns
+            if transformer == 'OneHotEncoder':
+                num_columns += slice_obj.stop - slice_obj.start  # Number of unique categories in the column
+            elif transformer == 'StandardScaler':
+                num_columns += slice_obj.stop - slice_obj.start  # One column for each numerical feature
+        
+        return num_columns
+    
     def test_model_loaded_properly(self):
         """Ensure the model loads without errors."""
         self.assertIsNotNone(self.model)
@@ -52,11 +68,17 @@ class TestCreditFraudModel(unittest.TestCase):
         transformed_input = self.transformer.transform(sample_input)
         input_df = pd.DataFrame(transformed_input)
 
+        # Calculate the expected number of columns after transformation
+        expected_columns = self.calculate_expected_columns(self.transformer, sample_input)
+
         # Make a prediction
         prediction = self.model.predict(input_df)
 
         # Ensure input dimensions are correct
-        self.assertEqual(input_df.shape[1], self.transformer.n_features_in_)
+        # self.assertEqual(input_df.shape[1], self.transformer.n_features_in_)
+
+        # Ensure input dimensions are correct
+        self.assertEqual(input_df.shape[1], expected_columns)
 
         # Ensure output dimensions match expected classification output
         self.assertEqual(len(prediction), 1)  # Single prediction for one row
